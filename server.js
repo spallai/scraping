@@ -31,23 +31,25 @@ mongoose.connect("mongodb://localhost/scraping", { useNewUrlParser: true });
 //A GET for scraping the USA Today website
 app.get("/scrape", function (req, res) {
     //First we grab the body of the html with axios
-    axios.get("https://www.washingtonpost.com/").then(function (response) {
+    axios.get("https://www.nytimes.com").then(function (response) {
         //then we load that into cheerio and save it with a $ as the selector
         var $ = cheerio.load(response.data);
 
         var results = [];
 
         //we then grab ever title and link as such
-        $("div.headline").each(function (i, element) {
+        $("article a").each(function (i, element) {
             
-            var title = $(this).children().text();
-            var link = $(this).children("a").attr("href");
+            var title = $(element).children().children().text();
+            var link = $(element).attr("href");
+            var blurb = $(element).find("p").text();
+        
             // var title = $(this).find("a").text();
             // var link = $(this).find("a").attr("href");
-
             results.push({
                 title: title,
-                link: link
+                link: link,
+                blurb: blurb
             });
             console.log(results);
         })
