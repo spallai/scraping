@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //connect to the Mongo DB
-mongoose.connect("mongodb://localhost/scraping", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/nytimes", { useNewUrlParser: true });
 
 //ROUTES
 
@@ -35,25 +35,26 @@ app.get("/scrape", function (req, res) {
         //then we load that into cheerio and save it with a $ as the selector
         var $ = cheerio.load(response.data);
 
-        var results = [];
+        var result = {};
 
         //we then grab ever title and link as such
         $("article a").each(function (i, element) {
             
-            var title = $(element).children().children().text();
-            var link = $(element).attr("href");
-            var blurb = $(element).find("p").text();
+            result.title = $(this).children().children().text();
+            result.link = $(this).attr("href");
+            result.blurb = $(this).find("p").text();
         
             // var title = $(this).find("a").text();
             // var link = $(this).find("a").attr("href");
-            results.push({
-                title: title,
-                link: link,
-                blurb: blurb
+            
+            db.Article.create(result).then(function(data){
+                console.log(data);
+            }).catch(function(err){
+                console.log(err);
             });
-            console.log(results);
-        })
-    })
+        });
+        res.send("Scrape complete");
+    });
     
 })
 
