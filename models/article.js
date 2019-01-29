@@ -20,10 +20,10 @@ var articleSchema = new Schema({
 
     note: {
         type: Schema.Types.ObjectId,
-        ref: "Note"
+        ref: "note"
     }
 });
 
-var Article = mongoose.model("article", articleSchema);
+var article = mongoose.model("article", articleSchema);
 
 module.exports = article;
