@@ -6,9 +6,6 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-//require all models
-var db = require("./models");
-
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nytimes";
 
 mongoose.connect(MONGODB_URI);
@@ -18,6 +15,8 @@ var PORT = 3000;
 //initialize express
 var app = express();
 
+//require all models
+var db = require("./models");
 //configure middleware
 
 //use morgan logger for logging requests
