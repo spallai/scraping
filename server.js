@@ -79,7 +79,7 @@ app.get("/articles", function(req, res) {
       .catch(function(err) {
         // If an error occurred, send it to the client
         res.json(err);
-      });
+      }); //jjjj
   });
   
   // Route for grabbing a specific Article by id, populate it with it's note
