@@ -29,8 +29,8 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-//connect to the Mongo DB
-mongoose.connect("mongodb://localhost/nytimes", { useNewUrlParser: true });
+// //connect to the Mongo DB
+// mongoose.connect("mongodb://localhost/nytimes", { useNewUrlParser: true });
 
 //ROUTES
 
